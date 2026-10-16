@@ -21,6 +21,7 @@ Fig 1. Lab Architecture
 
 
 
+
 The lab simulates a small company (**homelab.local**) with three departments
 (IT, HR, Sales). It runs on an isolated VirtualBox host-only network
 (192.168.56.0/24) with no internet exposure.

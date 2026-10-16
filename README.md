@@ -9,8 +9,11 @@ file access control, networking services, PowerShell automation, troubleshooting
 and recovery.
 
 DC01 (Windows Server 2022, static IP 192.168.56.10): the domain controller, running AD DS, DNS, DHCP and file shares. It manages users, groups, OUs, GPOs and shares (4 GB RAM, 2 vCPU, 60 GB disk).
+
 CLIENT01 (Windows 11, DHCP lease): the domain-joined workstation used for domain logins, GPOs and mapped drives (4 GB RAM, 64 GB disk).
+
 Host-only network (192.168.56.0/24): an isolated lab LAN connecting both VMs and the host adapter (192.168.56.1).
+
 Internet/home Wi-Fi: deliberately not connected, which keeps the lab isolated from your home network.
 
 <img width="1583" height="1003" alt="Lab Architecture" src="https://github.com/user-attachments/assets/6b8722ec-9073-480c-b81f-8d770751a901" />

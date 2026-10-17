@@ -18,8 +18,7 @@ Internet/home Wi-Fi: deliberately not connected, which keeps the lab isolated fr
 
 <img width="1583" height="1003" alt="Lab Architecture" src="https://github.com/user-attachments/assets/6b8722ec-9073-480c-b81f-8d770751a901" />
 <figcaption align="center"><b>Figure 1:</b> Network Diagram </figcaption>  
-<br>   
-<br>
+<br><br>
 
 ## Structure of Active Directory
 The lab simulates a small company (**homelab.local**) with three departments
@@ -29,42 +28,7 @@ The lab simulates a small company (**homelab.local**) with three departments
 
 <img width="1583" height="978" alt="Active Directory Structure" src="https://github.com/user-attachments/assets/6740bf38-8e90-4c8f-a752-cc85a88eceae" />
 <figcaption align="center"><b>Figure 2:</b> Structure of Active Directory </figcaption>
-<br>
-<br>
-
-## IP and Naming Plan <br>
-The lab uses a VirtualBox Host-Only network layout to isolate lab traffic while facilitating DNS and DHCP management via the Domain Controller.
-| Item | Value | Notes |
-| :--- | :--- | :--- |
-| Domain Name | homelab.local | Internal domain for lab use. |
-| Subnet / Mask | 192.168.56.0/24 | VirtualBox Host-Only range. |
-| VirtualBox Adapter (Host PC) | 192.168.56.1 | Gateway for lab traffic (if used). |
-| DC01 - Domain Controller (Server) | 192.168.56.10 (Static) | Primary DNS, DHCP Server. |
-| CLIENT01 - Workstation (Client) | DHCP Lease | Obtains IP and DNS automatically. |
-| DHCP Range | 192.168.56.100 - 192.168.56.150 | Addresses reserved for clients. |
-<br>
-<br>
-
-## Group Policy Objects (GPO) List <br>
-Group Policy Objects are linked to specific Organizational Units (OUs) to enforce domain security, compliance, and restrictive settings.   
-
-| GPO Name | Link Location | Settings | Purpose |
-| :--- | :--- | :--- | :--- |
-| Domain Password Policy | homelab.local (domain root) | - Min length: 12 chars<br>- Complexity: Enabled<br>- Max age: 90 days<br>- Lockout: 5 attempts | Enforce uniform security standards for all domain accounts. |
-| CMP - Workstations - Screen Lock | Company\Workstations OU | - Machine inactivity limit: 600 seconds (10 min) | Automatically secure computers left unattended for security compliance. |
-| USR - Sales - Restrict Control Panel | Company\Sales OU | - Prohibit access to Control Panel and PC settings: Enabled | Prevent unauthorized system setting changes for Sales team members. |
-<br>
-<br>
-
-## Permissions Matrix for Least Privilege
-Access controls for network file shares (\\DC01\...) are enforced using Global Groups (GG) and NTFS Permissions. Access follows the Principle of Least Privilege to isolate sensitive departmental data.
-
-| Folder | Share Path | NTFS Permissions: GG-HR | NTFS Permissions: GG-IT | NTFS Permissions: GG-Sales | NTFS Permissions: Authenticated Users | NTFS Permissions: Administrators & SYSTEM |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| HR | \\DC01\HR | Modify | None (Access Denied) | None (Access Denied) | None (Access Denied) | Full Control |
-| IT | \\DC01\IT | None (Access Denied) | Modify | None (Access Denied) | None (Access Denied) | Full Control |
-| Sales | \\DC01\Sales | None (Access Denied) | None (Access Denied) | Modify | None (Access Denied) | Full Control |
-| Public | \\DC01\Public | Read | Modify | Read | Read | Full Control |
+<br><br>
 
 ## What I built
 
@@ -81,6 +45,37 @@ Access controls for network file shares (\\DC01\...) are enforced using Global G
 - **Troubleshooting labs:** documented faults covering DNS, DHCP, permissions,
   GPO and account lockout, each with symptom, diagnosis, fix and lesson learned
 - **Recovery:** snapshots, AD Recycle Bin restore, and system-state backup
+<br><br> 
+
+## IP and Naming Plan <br>
+The lab uses a VirtualBox Host-Only network layout to isolate lab traffic while facilitating DNS and DHCP management via the Domain Controller.
+| Item | Value | Notes |
+| :--- | :--- | :--- |
+| Domain Name | homelab.local | Internal domain for lab use. |
+| Subnet / Mask | 192.168.56.0/24 | VirtualBox Host-Only range. |
+| VirtualBox Adapter (Host PC) | 192.168.56.1 | Gateway for lab traffic (if used). |
+| DC01 - Domain Controller (Server) | 192.168.56.10 (Static) | Primary DNS, DHCP Server. |
+| CLIENT01 - Workstation (Client) | DHCP Lease | Obtains IP and DNS automatically. |
+| DHCP Range | 192.168.56.100 - 192.168.56.150 | Addresses reserved for clients. |
+
+## Group Policy Objects (GPO) List <br>
+Group Policy Objects are linked to specific Organizational Units (OUs) to enforce domain security, compliance, and restrictive settings.   
+
+| GPO Name | Link Location | Settings | Purpose |
+| :--- | :--- | :--- | :--- |
+| Domain Password Policy | homelab.local (domain root) | - Min length: 12 chars<br>- Complexity: Enabled<br>- Max age: 90 days<br>- Lockout: 5 attempts | Enforce uniform security standards for all domain accounts. |
+| CMP - Workstations - Screen Lock | Company\Workstations OU | - Machine inactivity limit: 600 seconds (10 min) | Automatically secure computers left unattended for security compliance. |
+| USR - Sales - Restrict Control Panel | Company\Sales OU | - Prohibit access to Control Panel and PC settings: Enabled | Prevent unauthorized system setting changes for Sales team members. |
+
+## Permissions Matrix for Least Privilege
+Access controls for network file shares (\\DC01\...) are enforced using Global Groups (GG) and NTFS Permissions. Access follows the Principle of Least Privilege to isolate sensitive departmental data.
+
+| Folder | Share Path | NTFS Permissions: GG-HR | NTFS Permissions: GG-IT | NTFS Permissions: GG-Sales | NTFS Permissions: Authenticated Users | NTFS Permissions: Administrators & SYSTEM |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| HR | \\DC01\HR | Modify | None (Access Denied) | None (Access Denied) | None (Access Denied) | Full Control |
+| IT | \\DC01\IT | None (Access Denied) | Modify | None (Access Denied) | None (Access Denied) | Full Control |
+| Sales | \\DC01\Sales | None (Access Denied) | None (Access Denied) | Modify | None (Access Denied) | Full Control |
+| Public | \\DC01\Public | Read | Modify | Read | Read | Full Control |
 
 ## Skills demonstrated
 
